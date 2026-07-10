@@ -7,12 +7,13 @@ from langgraph.graph.message import add_messages
 from langgraph.prebuilt import ToolNode
 from langchain_core.tools import tool
 from langchain_core.messages import BaseMessage
+from langchain_groq import ChatGroq
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
 
-os.environ["OPENAI_API_KEY"]=os.getenv("OPENAI_API_KEY")
+os.environ["GROQ_API_KEY"]=os.getenv("GROQ_API_KEY")
 
 os.environ["LANGSMITH_API_KEY"]=os.getenv("LANGCHAIN_API_KEY")
 
@@ -20,7 +21,7 @@ os.environ["LANGSMITH_API_KEY"]=os.getenv("LANGCHAIN_API_KEY")
 class State(TypedDict):
     messages:Annotated[list[BaseMessage],add_messages]
 
-model=ChatOpenAI(temperature=0)
+model=ChatGroq(model="openai/gpt-oss-120b")
 
 def make_default_graph():
     graph_workflow=StateGraph(State)
